@@ -1,5 +1,8 @@
 package com.farzadz.springaspect.aspect;
 
+import com.farzadz.springaspect.aspect.AspectAnnotations.SayGoodbyeAspectAnnotation;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -21,8 +24,42 @@ public class AspectsConfig {
     System.out.println("Aspect Greeting to: " + someName);
   }
 
+  @Around("executeAroundAnnotated()")
+  public Object aroundAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
+    System.out.println("Hi from around advice before proceeding joinPoint!");
+    Object result = joinPoint.proceed();
+    System.out.println("Hi from around advice after proceeding joinPoint!");
+    return result;
+  }
+
+  /**
+   *  See spring AOP example section:
+   *   any join point (method execution only in Spring AOP) which takes a single parameter, and where the runtime type of the argument passed has the @Classified annotation:
+   *   @args(com.xyz.security.Classified)
+   */
+
+  @Around("executeAroundMethodWithAnnotatedArgs() && args(.. ,@com.farzadz.springaspect.aspect.AspectAnnotations.SayGoodbyeAspectAnnotation name, *)")
+  public Object aroundArgAnnotatedAdvice(ProceedingJoinPoint joinPoint, String name)
+      throws Throwable {
+    System.out.println("Bye Bye from aspect : " + name);
+    return joinPoint.proceed();
+  }
+
   @Pointcut("execution(String com.farzadz.springaspect.aspect.Person.sayHello(..))")
   public void onSayHello() {
   }
+
+  @Pointcut("@annotation(com.farzadz.springaspect.aspect.AspectAnnotations.ExecuteAroundAspect))")
+  public void executeAroundAnnotated() {
+  }
+
+  @Pointcut("execution(* *(.., @com.farzadz.springaspect.aspect.AspectAnnotations.SayGoodbyeAspectAnnotation (*), ..))")
+  public void executeAroundMethodWithAnnotatedArgs() {
+  }
+
+  //  @Pointcut("@annotation(com.farzadz.springaspect.aspect.AspectAnnotations.SayGoodbyeAspectAnnotation)")
+  //  public void executeOnMethodsWithSayGoodbyeAnnotatedParams() {
+  //
+  //  }
 
 }

@@ -1,5 +1,8 @@
 package com.farzadz.springaspect.aspect;
 
+import com.farzadz.springaspect.aspect.AspectAnnotations.ExecuteAroundAspect;
+import com.farzadz.springaspect.aspect.AspectAnnotations.SayGoodbyeAspectAnnotation;
+
 public class Person {
 
   private String firstName;
@@ -18,34 +21,27 @@ public class Person {
     return firstName;
   }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
-
   public String getLastName() {
     return lastName;
-  }
-
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
   }
 
   public String getFullName() {
     return this.getFirstName() + " " + this.getLastName();
   }
 
-
+  @ExecuteAroundAspect
   public int getAge() {
     return age;
   }
 
-  public void setAge(int age) {
-    this.age = age;
+
+  public String sayHello(String name){
+    String greeting = "Person sayHello: Hey " + name;
+    return greeting;
   }
 
-  public String sayHello(String name, String anotherName){
-    String greeting = "Person sayHello: Hey " + name;
-    System.out.println();
-    return greeting;
+  public String sayGoodbye(String firstName, @SayGoodbyeAspectAnnotation String name, String secondName){
+    String goodbye = "Person say goodbye: bye bye " + name;
+    return goodbye;
   }
 }

@@ -1,2 +1,2 @@
-# spring-tips
-Samples for different aspects of spring framework
+# Spring AOP
+Samples for experimenting with Spring Aspect Oriented Programming.

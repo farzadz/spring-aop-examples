@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 public class SpringAspectApplication {
 
-  public static void main(String[] args) throws InterruptedException {
+  public static void main(String[] args) {
     ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
     PeopleService peopleService = context.getBean("peopleService", PeopleService.class);
     // getters called inside the class are not called:

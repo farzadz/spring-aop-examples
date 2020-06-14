@@ -57,9 +57,5 @@ public class AspectsConfig {
   public void executeAroundMethodWithAnnotatedArgs() {
   }
 
-  //  @Pointcut("@annotation(com.farzadz.springaspect.aspect.AspectAnnotations.SayGoodbyeAspectAnnotation)")
-  //  public void executeOnMethodsWithSayGoodbyeAnnotatedParams() {
-  //
-  //  }
 
 }
